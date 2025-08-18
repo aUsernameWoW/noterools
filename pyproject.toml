@@ -14,7 +14,7 @@ maintainers = [
 ]
 keywords = [ "Zotero", ]
 description = "Not just zotero tools."
-dependencies = ["pywin32", "rich", "pyzotero"]
+dependencies = ["pywin32", "rich", "pyzotero", "lxml"]
 
 [project.urls]
 homepage = "https://github.com/Syize/noterools"

@@ -3,10 +3,24 @@ from json import loads
 from os.path import basename
 from typing import Union
 
+from lxml import html
+
 from .error import AuthorNotFoundError, TitleNotFoundError
 from .hook import HOOKTYPE, HookBase
 from .utils import logger
 from .word import Word
+
+
+def _strip_html_tags(raw_str: str) -> str:
+    """
+    Remove HTML tags from the input string.
+
+    :param raw_str: String which may contain HTML tags.
+    :type raw_str: str
+    :return: Processed string without HTML tags.
+    :rtype: str
+    """
+    return html.fromstring(raw_str).text_content()
 
 
 class CSLJson(dict):
@@ -56,7 +70,7 @@ class CSLJson(dict):
             raise TitleNotFoundError(f"'title' not found in CSL json, please check your citations.")
 
         else:
-            return self["title"]
+            return _strip_html_tags(self["title"])
 
     def get_container_title(self) -> str:
         """
